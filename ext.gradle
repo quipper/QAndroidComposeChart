@@ -1,0 +1,20 @@
+class Config {
+    def compileSdkVersion = 31
+    def minSdkVersion = 21
+    def targetSdkVersion = 31
+}
+
+ext {
+    // cannot flatten values because they will conflict with android-plugin's methods
+    config = new Config()
+
+    appVersionName = "${versionInfo.major}.${versionInfo.minor}.${versionInfo.patch}"
+
+    /* versions */
+    core_ktx_version = "1.7.0"
+    appcompat_version = "1.4.1"
+    google_material_version = "1.5.0"
+    compose_activity_version = "1.4.0"
+    compose_version = '1.1.1'
+    compose_constraint_layout_version = '1.0.0'
+}
