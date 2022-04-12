@@ -4,14 +4,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.quipper.qandroidcomposechart.components.*
+import com.quipper.qandroidcomposechart.models.ChartClickValue
 import com.quipper.qandroidcomposechart.models.ChartData
 import com.quipper.qandroidcomposechart.models.ChartTheme
-import com.quipper.qandroidcomposechart.models.ChartClickValue
 
 @Composable
 fun QChart(
@@ -19,19 +17,9 @@ fun QChart(
     chartHeight: Dp = 300.dp,
     chartModalTitle: String,
     chartLineWidth: Dp = 4.dp,
-    chartTheme: ChartTheme = ChartTheme.Yellow(),
+    chartTheme: ChartTheme = ChartTheme.Builder().build(),
     isChartLineCurved: Boolean = false,
-    horizontalLineColor: Color = Color.Black,
-    clickedLineColor: Color,
     bgLineWidth: Dp = 1.dp,
-    legendsTextColor: Color = Color.Black,
-    legendsClickedTextColor: Color = Color.White,
-    legendsClickShapeColor: Color = Color.Black,
-    modalBackgroundColor: Color = Color.White,
-    valueTextStyle: TextStyle,
-    labelTextStyle: TextStyle,
-    modalTextStyle: TextStyle,
-    legendsTextStyle: TextStyle,
     chartData: ChartData,
     onValueClicked: (chartClickValue: ChartClickValue) -> Unit
 ) {
@@ -41,7 +29,11 @@ fun QChart(
     ) {
 
         val marginY = chartHeight.div(6)
-        DrawTopLine(bottomPadding = marginY, color = horizontalLineColor, strokeWidth = bgLineWidth)
+        DrawTopLine(
+            bottomPadding = marginY,
+            color = chartTheme.horizontalLineColor,
+            strokeWidth = bgLineWidth
+        )
 
         var offsetsIndexed: List<Offset> by remember {
             mutableStateOf(listOf())
@@ -72,15 +64,12 @@ fun QChart(
             lineWidth = bgLineWidth,
             chartLineWidth = chartLineWidth,
             isChartLineCurved = isChartLineCurved,
-            legendsTextColor = legendsTextColor,
-            lineColor = horizontalLineColor,
-            clickedLineColor = clickedLineColor,
             chartTheme = chartTheme,
             offsetsIndexed = offsetsIndexed,
             onClickIndex = onClickIndex,
             chartData = chartData,
             isFirstClickDefine = isFirstClickDefine,
-            valueTextStyle = valueTextStyle,
+            valueTextStyle = chartTheme.valueTextStyle,
             onSetClickIndex = { onClickIndex = it },
             onFalseFirstClickDefine = { isFirstClickDefine = false },
             onSetOffsetIndexed = { offsetsIndexed = it }
@@ -90,29 +79,22 @@ fun QChart(
             onClickIndex = onClickIndex,
             data = chartData.data,
             onWidthChange = { labelWidth = it },
-            labelTextStyle = labelTextStyle,
             chartTheme = chartTheme
         )
         DrawOnClickModal(
             title = chartModalTitle,
-            valueTextColor = chartTheme.baseColor,
-            descTextColor = legendsTextColor,
-            backgroundColor = modalBackgroundColor,
             offsetsIndexed = offsetsIndexed,
             isFirstOnClick = isFirstOnClick,
             chartData = chartData,
             onClickIndex = onClickIndex,
-            modalTextStyle = modalTextStyle,
-            labelWidth = labelWidth
+            labelWidth = labelWidth,
+            chartTheme = chartTheme
         )
         DrawXValueLegend(
             height = chartHeight,
-            legendsTextColor = legendsTextColor,
-            legendsClickedTextColor = legendsClickedTextColor,
-            clickedShapedColor = legendsClickShapeColor,
             data = chartData.data,
+            chartTheme = chartTheme,
             onClickIndex = onClickIndex,
-            legendsTextStyle = legendsTextStyle,
             onValueClicked = { index, value ->
                 if (!isFirstOnClick) isFirstOnClick = true
                 onClickIndex = index

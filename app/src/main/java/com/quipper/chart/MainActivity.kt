@@ -4,10 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.sp
 import com.quipper.qandroidcomposechart.QChart
 import com.quipper.qandroidcomposechart.models.ChartData
+import com.quipper.qandroidcomposechart.models.ChartTheme
 import com.quipper.qandroidcomposechart.models.ChartValue
 
 class MainActivity : AppCompatActivity() {
@@ -16,11 +15,12 @@ class MainActivity : AppCompatActivity() {
         setContent {
             QChart(
                 chartModalTitle = "",
-                clickedLineColor = Color.Black,
-                valueTextStyle = TextStyle(fontSize = 10.sp),
-                labelTextStyle = TextStyle(fontSize = 10.sp),
-                modalTextStyle = TextStyle(fontSize = 10.sp),
-                legendsTextStyle = TextStyle(fontSize = 10.sp),
+                chartTheme = ChartTheme.Builder()
+                    .baseColor(
+                        Color.Black,
+                        Color.Yellow
+                    )
+                    .build(),
                 chartData = createDummyChartData(),
                 onValueClicked = {}
             )
