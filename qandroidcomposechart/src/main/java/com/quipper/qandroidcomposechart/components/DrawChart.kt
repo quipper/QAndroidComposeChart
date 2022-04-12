@@ -25,9 +25,6 @@ internal fun DrawChart(
     lineWidth: Dp,
     chartLineWidth: Dp,
     isChartLineCurved: Boolean,
-    legendsTextColor: Color,
-    lineColor: Color,
-    clickedLineColor: Color,
     chartTheme: ChartTheme,
     offsetsIndexed: List<Offset>,
     onClickIndex: Int,
@@ -62,7 +59,7 @@ internal fun DrawChart(
 
         val yValueTextStyle = Paint().apply {
             textSize = valueTextStyle.fontSize.toPx()
-            color = legendsTextColor.toArgb()
+            color = chartTheme.legendsTextColor.toArgb()
             textAlign = Paint.Align.RIGHT
             typeface = Typeface.SANS_SERIF
         }
@@ -88,7 +85,7 @@ internal fun DrawChart(
             }
 
             drawLine(
-                color = lineColor.copy(alpha = 0.5f),
+                color = chartTheme.horizontalLineColor.copy(alpha = 0.5f),
                 start = Offset(x = startChartLinePos, y = currentLinePos),
                 end = Offset(x = endChartLinePos, y = currentLinePos),
                 strokeWidth = lineWidth.toPx()
@@ -96,7 +93,7 @@ internal fun DrawChart(
         }
 
         drawLine(
-            color = lineColor,
+            color = chartTheme.horizontalLineColor,
             start = Offset(x = 0f, y = bottomChartLinePos),
             end = Offset(x = endChartLinePos, y = bottomChartLinePos),
             strokeWidth = 1.dp.toPx()
@@ -173,7 +170,7 @@ internal fun DrawChart(
         if (offsetsIndexed.isNotEmpty()) {
             //            draw clicked line
             drawLine(
-                color = clickedLineColor,
+                color = chartTheme.clickedLineColor,
                 strokeWidth = 1.dp.toPx(),
                 start = Offset(
                     x = offsetsIndexed[onClickIndex].x,
@@ -191,7 +188,7 @@ internal fun DrawChart(
 
             //            draw clicked circle
             drawCircle(
-                color = chartTheme.baseColor,
+                color = chartTheme.pointColor,
                 radius = 6.dp.toPx(),
                 style = Stroke(
                     width = 2.dp.toPx()

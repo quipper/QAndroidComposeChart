@@ -12,16 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quipper.qandroidcomposechart.models.ChartData
+import com.quipper.qandroidcomposechart.models.ChartTheme
 import com.quipper.qandroidcomposechart.utils.DateFormat
 import com.quipper.qandroidcomposechart.utils.convertFormat
 
@@ -30,12 +29,9 @@ internal fun DrawOnClickModal(
     title: String,
     onClickIndex: Int,
     labelWidth: Float,
-    valueTextColor: Color,
-    descTextColor: Color,
-    backgroundColor: Color,
     isFirstOnClick: Boolean,
     offsetsIndexed: List<Offset>,
-    modalTextStyle: TextStyle,
+    chartTheme: ChartTheme,
     chartData: ChartData
 ) {
     if (offsetsIndexed.isNotEmpty() && isFirstOnClick) {
@@ -52,7 +48,9 @@ internal fun DrawOnClickModal(
             val yValue =
                 if (
                     chartData.data[onClickIndex].isValueAvailable &&
-                    chartData.data[onClickIndex].valueAsFloat!! <= chartData.highestYValueChart.div(2)
+                    chartData.data[onClickIndex].valueAsFloat!! <= chartData.highestYValueChart.div(
+                        2
+                    )
                 ) {
                     if (chartData.data[onClickIndex].valueAsFloat == 0f) {
                         offsetsIndexed[onClickIndex].y - (cardSize.height + 5f)
@@ -64,7 +62,7 @@ internal fun DrawOnClickModal(
                     offsetsIndexed[onClickIndex].y - addPos
                 }
             val xValue = if (onClickIndex > chartData.data.size.div(2)) {
-                val addPos = cardSize.width + labelWidth + 10f
+                val addPos = cardSize.width + labelWidth + 25f
                 offsetsIndexed[onClickIndex].x - addPos
             } else {
                 val addPos = labelWidth + 50f
@@ -90,7 +88,7 @@ internal fun DrawOnClickModal(
                     )
                 },
             shape = RoundedCornerShape(10.dp),
-            backgroundColor = backgroundColor
+            backgroundColor = chartTheme.modalBackgroundColor
         ) {
             Column(
                 modifier = Modifier
@@ -105,7 +103,7 @@ internal fun DrawOnClickModal(
                     ),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
-                    color = descTextColor
+                    color = chartTheme.legendsTextColor
                 )
                 title.split("\\s+".toRegex()).forEach {
                     Text(
@@ -115,15 +113,15 @@ internal fun DrawOnClickModal(
                         text = it,
                         fontSize = 21.sp,
                         fontWeight = FontWeight.Bold,
-                        color = descTextColor
+                        color = chartTheme.legendsTextColor
                     )
                 }
                 Text(
                     modifier = Modifier.padding(top = 2.dp),
                     textAlign = TextAlign.Start,
                     text = chartData.data[onClickIndex].valueAsInt.toString(),
-                    style = modalTextStyle,
-                    color = valueTextColor
+                    style = chartTheme.modalTextStyle,
+                    color = chartTheme.baseColor
                 )
             }
         }

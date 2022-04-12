@@ -7,14 +7,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.quipper.qandroidcomposechart.R
+import com.quipper.qandroidcomposechart.models.ChartTheme
 import com.quipper.qandroidcomposechart.models.ChartValue
 import com.quipper.qandroidcomposechart.utils.DateFormat
 import com.quipper.qandroidcomposechart.utils.convertFormat
@@ -22,12 +21,9 @@ import com.quipper.qandroidcomposechart.utils.convertFormat
 @Composable
 internal fun DrawXValueLegend(
     height: Dp,
-    legendsTextColor: Color,
-    legendsClickedTextColor: Color,
-    clickedShapedColor: Color,
     data: List<ChartValue>,
     onClickIndex: Int,
-    legendsTextStyle: TextStyle,
+    chartTheme: ChartTheme,
     onValueClicked: (index: Int, value: String) -> Unit
 ) {
     Column(
@@ -40,7 +36,7 @@ internal fun DrawXValueLegend(
                 .height(height = height),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            data.forEachIndexed {index, value ->
+            data.forEachIndexed { index, value ->
                 Spacer(
                     modifier = Modifier
                         .fillMaxHeight()
@@ -55,7 +51,7 @@ internal fun DrawXValueLegend(
             modifier = Modifier.padding(top = 2.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            data.forEachIndexed {index, value ->
+            data.forEachIndexed { index, value ->
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -68,11 +64,11 @@ internal fun DrawXValueLegend(
                         Image(
                             painter = painterResource(id = R.drawable.ic_chart_bottom_label),
                             contentDescription = null,
-                            colorFilter = ColorFilter.tint(clickedShapedColor)
+                            colorFilter = ColorFilter.tint(chartTheme.legendsClickShapeColor)
                         )
-                        legendsClickedTextColor
+                        chartTheme.legendsClickedTextColor
                     } else {
-                        legendsTextColor
+                        chartTheme.legendsTextColor
                     }
                     Text(
                         modifier = Modifier.padding(top = 2.dp),
@@ -80,7 +76,7 @@ internal fun DrawXValueLegend(
                             DateFormat.DEFAULT_FORMAT,
                             DateFormat.MONTH_DATE_FORMAT
                         ),
-                        style = legendsTextStyle,
+                        style = chartTheme.legendsTextStyle,
                         color = textColor,
                         textAlign = TextAlign.Center
                     )
