@@ -1,6 +1,6 @@
 project.ext.versionInfo = [
         major: 1,
-        minor: 0,
+        minor: 1,
         patch: 0
 ]
-project.ext.appVersionCode = 1
+project.ext.appVersionCode = 2
