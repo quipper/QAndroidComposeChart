@@ -1,7 +1,8 @@
 # QAndroidComposeChart
 Simple chart library build using compose and kotlin
 
-[![Release](https://img.shields.io/github/release/PhilJay/MPAndroidChart.svg?style=flat)](https://jitpack.io/#quipper/QAndroidComposeChart)
+### **Release version** : 
+**1.1.0**
 
 ## Gradle setup
 
