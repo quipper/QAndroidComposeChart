@@ -1,5 +1,12 @@
-# QAndroidComposeChart
-Simple chart library build using compose and kotlin
+# QAndroidComposeChart 
+Simple chart library build using compose and kotlin.
+
+### Example View
+
+- Basic style\
+![Apr-14-2022 08-28-31](https://user-images.githubusercontent.com/48426396/163296195-4c0c7a2f-440c-4f48-9e1e-6b68bcf7487d.gif)
+- Curved style\
+![Apr-14-2022 08-29-54](https://user-images.githubusercontent.com/48426396/163296300-feae3bef-4ea5-4457-89ed-c29133d1aa1a.gif)
 
 ### **Release version** : 
 **1.1.0**
@@ -38,7 +45,7 @@ val chartData = ChartData(listOf())
 **Step 3.** Implement the Chart
 ```
 QChart(
-    chartModalTitle = "Chart title",
+    chartModalTitle = "Android Compose Chart",
     chartTheme = chartTheme,
     chartData = chartData,
     onValueClicked = {}
