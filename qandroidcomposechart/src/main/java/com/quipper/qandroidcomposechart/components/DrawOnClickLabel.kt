@@ -28,7 +28,7 @@ internal fun DrawOnClickLabel(
     onWidthChange: (Float) -> Unit
 ) {
 
-    if (offsetsIndexed.isNotEmpty()) {
+    if (offsetsIndexed.isNotEmpty() && data.size > onClickIndex) {
 
         val currentData = data[onClickIndex]
         val isRightPosition = onClickIndex > data.size.div(2)
