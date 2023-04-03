@@ -34,34 +34,34 @@ internal fun DrawOnClickModal(
     chartTheme: ChartTheme,
     chartData: ChartData
 ) {
+
+    var cardSize by remember {
+        mutableStateOf(Size.Zero)
+    }
+
     if (offsetsIndexed.isNotEmpty() && isFirstOnClick) {
 
-        var cardSize by remember {
-            mutableStateOf(Size.Zero)
-        }
-
-        LaunchedEffect(key1 = chartData) {
-            cardSize = Size.Zero
-        }
-
         val clickOffset: DpOffset = with(LocalDensity.current) {
-            val yValue =
-                if (
-                    chartData.data[onClickIndex].isValueAvailable &&
-                    chartData.data[onClickIndex].valueAsFloat!! <= chartData.highestYValueChart.div(
-                        2
-                    )
-                ) {
-                    if (chartData.data[onClickIndex].valueAsFloat == 0f) {
-                        offsetsIndexed[onClickIndex].y - (cardSize.height + 5f)
-                    } else {
-                        offsetsIndexed[onClickIndex].y - (cardSize.height - 20f)
-                    }
+            val isCurrentItemAvailable = chartData.data[onClickIndex].isValueAvailable
+            val isCurrentItemShouldBeOnBottom = chartData.data[onClickIndex].valueAsFloat!! <= chartData.highestYValueChart.div(2)
+
+            val yValue = if (
+                isCurrentItemAvailable &&
+                isCurrentItemShouldBeOnBottom
+            ) {
+                val isValueZero = chartData.data[onClickIndex].valueAsFloat == 0f
+                if (isValueZero) {
+                    offsetsIndexed[onClickIndex].y - (cardSize.height + 5f)
                 } else {
-                    val addPos = 35f
-                    offsetsIndexed[onClickIndex].y - addPos
+                    offsetsIndexed[onClickIndex].y - (cardSize.height - 20f)
                 }
-            val xValue = if (onClickIndex > chartData.data.size.div(2)) {
+            } else {
+                val addPos = 35f
+                offsetsIndexed[onClickIndex].y - addPos
+            }
+
+            val isCurrentItemShouldBeOnRight = onClickIndex > chartData.data.size.div(2)
+            val xValue = if (isCurrentItemShouldBeOnRight) {
                 val addPos = cardSize.width + labelWidth + 25f
                 offsetsIndexed[onClickIndex].x - addPos
             } else {
